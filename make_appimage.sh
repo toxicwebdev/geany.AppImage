@@ -68,7 +68,7 @@ if [ ! -f "./${LOWERAPP}-${VERSION}.tar.gz" ];
 then
 	#JSON=$(wget -q -O - https://api.github.com/repos/geany/geany/releases)
 	#URL=$(echo $JSON | ./jq-linux64 '.[] | select(.tag_name == env.VERSION) | .assets[] | select(.content_type == "application/gzip") | .browser_download_url')
-  URL=$(curl -s "https://api.github.com/repos/geany/geany/releases/latest" | jq -r '.assets[] .browser_download_url' | grep 'tar.gz' | head -n1)
+  URL=$(curl -s "https://api.github.com/repos/geany/geany/releases/latest" | ./jq-linux64 -r '.assets[] .browser_download_url' | grep 'tar.gz' | head -n1)
   wget -c $(echo $URL | tr -d "'" | tr -d '"') --output-document="${LOWERAPP}-${VERSION}.tar.gz"
   rm --recursive --force "./${LOWERAPP}-${VERSION_SHORT}"
 fi
