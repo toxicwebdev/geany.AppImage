@@ -115,10 +115,9 @@ popd
 
 #=== Include geany-themes
 
-pushd ${APPDIR}/usr/share/geany
+#pushd ${APPDIR}/usr/share/geany
 #svn export https://github.com/geany/geany-themes.git/trunk/colorschemes --force
-svn export https://github.com/geany/geany-themes/tree/master/colorschemes --force
-popd
+#popd
 
 #=== Build AppImage
 
