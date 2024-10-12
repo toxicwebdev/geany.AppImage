@@ -29,8 +29,9 @@ then
 fi
 
 #Get App version from tag, excluding suffixe "-Revision" used only for specific AppImage builds...
-export VERSION=$(echo $GITHUB_REF_NAME | cut -d'-' -f1)
-export VERSION_SHORT=${VERSION%.*}
+export VERSION=2.0.0
+#export VERSION=$(echo $GITHUB_REF_NAME | cut -d'-' -f1)
+#export VERSION_SHORT=${VERSION%.*}
 
 #=== Package installations for building
 
