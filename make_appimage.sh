@@ -29,9 +29,9 @@ then
 fi
 
 #Get App version from tag, excluding suffixe "-Revision" used only for specific AppImage builds...
-export VERSION=2.0.0
+export VERSION=$(curl -s "https://api.github.com/repos/geany/geany/releases/latest" | jq -r '.assets[] .browser_download_url' | grep 'tar.gz' | head -n1 | cut -d/ -f8- | cut -f1 -d"/")
 #export VERSION=$(echo $GITHUB_REF_NAME | cut -d'-' -f1)
-#export VERSION_SHORT=${VERSION%.*}
+export VERSION_SHORT=${VERSION%.*}
 
 #=== Package installations for building
 
@@ -66,10 +66,8 @@ fi
 
 if [ ! -f "./${LOWERAPP}-${VERSION}.tar.gz" ];
 then
-	#JSON=$(wget -q -O - https://api.github.com/repos/geany/geany/releases)
-	#URL=$(echo $JSON | ./jq-linux64 '.[] | select(.tag_name == env.VERSION) | .assets[] | select(.content_type == "application/gzip") | .browser_download_url')
   URL=$(curl -s "https://api.github.com/repos/geany/geany/releases/latest" | ./jq-linux64 -r '.assets[] .browser_download_url' | grep 'tar.gz' | head -n1)
-  wget -c $(echo $URL | tr -d "'" | tr -d '"') --output-document="${LOWERAPP}-${VERSION}.tar.gz"
+  wget --continue $(echo $URL | tr -d "'" | tr -d '"') --output-document="${LOWERAPP}-${VERSION}.tar.gz"
   rm --recursive --force "./${LOWERAPP}-${VERSION_SHORT}"
 fi
 
@@ -97,8 +95,7 @@ popd
 
 if [ ! -f "./${LOWERAPP}-plugins-${VERSION}.tar.gz" ];
 then
-	JSON=$(wget -q -O - https://api.github.com/repos/geany/geany-plugins/releases)
-	URL=$(echo $JSON | ./jq-linux64 '.[] | select(.tag_name == env.VERSION) | .assets[] | select(.content_type == "application/gzip") | .browser_download_url')
+  URL=$(curl -s "https://api.github.com/repos/geany/geany-plugins/releases/latest" | ./jq-linux64 -r '.assets[] .browser_download_url' | grep 'tar.gz' | head -n1)
   wget --continue $(echo $URL | tr -d "'" | tr -d '"') --output-document="${LOWERAPP}-plugins-${VERSION}.tar.gz"
   rm --recursive --force "./${LOWERAPP}-plugins-${VERSION}"
 fi
