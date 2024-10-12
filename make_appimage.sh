@@ -119,6 +119,9 @@ popd
 #svn export https://github.com/geany/geany-themes.git/trunk/colorschemes --force
 #popd
 
+mkdir --parents "${APPDIR}/usr/share/geany/colorschemes"
+cp -axv ${SCRIPTPATH}/assets/colorschemes/* ${APPDIR}/usr/share/geany/colorschemes/
+
 #=== Build AppImage
 
 wget -c "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh" --output-document=linuxdeploy-plugin-gtk
