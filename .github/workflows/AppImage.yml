@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Install required dependencies (as Dockerfile)
-      run: sudo apt-get install --yes locales langpacks-ru wget build-essential
+      run: sudo apt-get install --yes locales wget build-essential
 
     - name: Executing AppImage build
       run: bash ./make_appimage.sh
