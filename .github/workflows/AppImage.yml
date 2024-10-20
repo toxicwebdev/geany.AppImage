@@ -4,10 +4,10 @@ on:
     types: [created, edited]
     
   workflow_dispatch:
-    #inputs:
-      #tag:
-        #description: 'Release tag'
-        #required: true
+    inputs:
+      tag:
+        description: 'Release tag'
+        required: true
         
   push:
     branches: [ master ]
@@ -40,7 +40,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: True
-        tag: ${{ github.event.inputs.tag }}
+        #tag: ${{ github.event.inputs.tag }}
         name: "Release build (${{ github.event.inputs.tag }})"
         artifacts: "Geany*.AppImage"
         token: ${{ secrets.GITHUB_TOKEN }}
