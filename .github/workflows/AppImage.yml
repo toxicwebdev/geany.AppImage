@@ -2,6 +2,12 @@ name: AppImage Build
 on:
   release:
     types: [created, edited]
+    
+  push:
+    paths-ignore: # Не перестраивайте, если изменилась только документация
+      - "**.md"
+  
+  pull_request:
   workflow_dispatch:
     inputs:
       tag:
